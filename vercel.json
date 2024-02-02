@@ -1,14 +1,14 @@
 {
   "builds": [
     {
-      "src": "/api/scrape.py",
+      "src": "index.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "(/.*)",
-      "dest": "/api/scrape.py"
+      "dest": "index.py"
     }
   ]
 }
