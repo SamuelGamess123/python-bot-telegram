@@ -2,25 +2,29 @@ import telebot
 import requests
 import os
 import time
-from flask import Flask
+from flask import Flask, request
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# Defina o token do seu bot do Telegram
+# Define o token do seu bot do Telegram
 TOKEN = os.getenv('TOKEN')
 
 # Cria uma instância do bot
 bot = telebot.TeleBot(TOKEN, threaded=False)
 app = Flask(__name__)
-@app.route("/", methods=['POST'])
+
+@app.route("/", methods=['POST', 'GET'])
 def index():
-    bot.remove_webhook()
-    time.sleep(1)
-    bot.set_webhook()
-    update = telebot.types.Update.de_json(request.stream.read().decode("utf-8"))
-    bot.process_new_updates([update])
-    return "ok", 200
+    if request.method == 'POST':
+        bot.remove_webhook()
+        time.sleep(1)
+        bot.set_webhook()
+        update = telebot.types.Update.de_json(
+            request.stream.read().decode("utf-8"))
+        bot.process_new_updates([update])
+        return "ok", 200
+    return "Hello, World!", 200
 
 # Função para lidar com o comando /start
 @bot.message_handler(commands=['start'])
@@ -44,3 +48,7 @@ def handle_text_message(message):
             bot.reply_to(message, f'Falha ao baixar o arquivo HTML, seu código de retorno é: {response.status_code}')
     else:
         bot.reply_to(message, 'Por favor, envie um link válido para um arquivo HTML.')
+
+# Executa o servidor Flask
+if __name__ == '__main__':
+    app.run()
