@@ -32,4 +32,5 @@ def handle_text_message(message):
         bot.reply_to(message, 'Por favor, envie um link válido para um arquivo HTML.')
 
 # Inicia o bot
-bot.polling()
+bot.remove_webhook()
+bot.set_webhook(url="https://python-bot-telegram-a9hi2qsj6-samuelgamess123.vercel.app/")
