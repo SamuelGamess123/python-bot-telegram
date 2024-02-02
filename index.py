@@ -14,14 +14,13 @@ TOKEN = os.getenv('TOKEN')
 bot = telebot.TeleBot(TOKEN, threaded=False)
 app = Flask(__name__)
 @app.route("/", methods=['POST'])
-    def index():
-        bot.remove_webhook()
-        time.sleep(1)
-        bot.set_webhook()
-        update = telebot.types.Update.de_json(
-            request.stream.read().decode("utf-8"))
-        bot.process_new_updates([update])
-        return "ok", 200
+def index():
+    bot.remove_webhook()
+    time.sleep(1)
+    bot.set_webhook()
+    update = telebot.types.Update.de_json(request.stream.read().decode("utf-8"))
+    bot.process_new_updates([update])
+    return "ok", 200
 
 # Função para lidar com o comando /start
 @bot.message_handler(commands=['start'])
