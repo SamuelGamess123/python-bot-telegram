@@ -17,7 +17,7 @@ app = Flask(__name__)
 @app.route("/", methods=['POST'])
 def index():
     update = telebot.types.Update.de_json(request.stream.read().decode("utf-8"))
-        bot.process_new_updates([update])
+    bot.process_new_updates([update])
     return "ok", 200
 
 # Função para lidar com o comando /start
