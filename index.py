@@ -42,7 +42,3 @@ def handle_text_message(message):
             bot.reply_to(message, f'Falha ao baixar o arquivo HTML, seu código de retorno é: {response.status_code}')
     else:
         bot.reply_to(message, 'Por favor, envie um link válido para um arquivo HTML.')
-
-# Executa o servidor Flask
-if __name__ == '__main__':
-    app.run()
